@@ -12,10 +12,13 @@ class Playlist:
 
     if self.__first_song == None:
       self.__first_song = new_song
-    else: 
-      new_song = Song(title)
-      if self.__first_song.get_next_song() == None:
-        self.__first_song.set_next_song(new_song) 
+    else:
+      current_song = self.__first_song
+
+      while current_song.get_next_song() != None:
+        current_song = current_song.get_next_song()
+      
+      current_song.set_next_song(new_song)
 
 
 
@@ -25,12 +28,20 @@ class Playlist:
   def find_song(self, title):
     current_song = self.__first_song
     index = 0
+    song_found = False
+
     while current_song != None:
       index += 1
-      if current_song == title:
-        return index
+      if current_song.get_title() == title:
+        song_found = True
+        break
       else:
         current_song = current_song.get_next_song()
+    
+    if song_found is True:
+      return index
+    else:
+      return -1 
 
 
   # TODO: Create a method called remove_song that removes a song from the playlist. This method takes one parameter, title, which is the song that should be removed. 
@@ -39,10 +50,25 @@ class Playlist:
     current_song = self.__first_song
 
     while current_song != None:
+      
+      if current_song.get_title() == title:
+        if current_song.get_next_song() != None:
+          current_song.set_title(current_song.get_next_song().get_title())
+        else: 
+          current_song.set_title(None)
 
-      if current_song.get_next_song() == title:
-        current_song.set_next_song(current_song.get_next_song().get_next_song())
-        return 
+        while current_song.get_next_song() != None:
+          current_song.set_title(current_song.get_next_song().get_title())
+          current_song = current_song.get_next_song()
+
+
+        # if current_song.get_next_song() != None: 
+        #   current_song.set_title(current_song.get_next_song().get_title())
+        #   current_song.set_next_song(current_song.get_next_song)
+        # else:
+        #   current_song = None
+
+        break
       else:
         current_song = current_song.get_next_song()
 
@@ -70,6 +96,12 @@ class Playlist:
   # 3. Song Title 3
 
   def print_songs(self):
-    pass
+    current_song = self.__first_song
+    song_num = 1
+
+    while current_song != None:
+      print(f'{song_num}. {current_song.get_title().capitalize()}')
+      song_num += 1
+      current_song = current_song.get_next_song()
 
   
