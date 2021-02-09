@@ -57,19 +57,6 @@ class Playlist:
           current_song = current_song.get_next_song()
         else:
           current_song.set_title(None)
-        # else: 
-        #   current_song.set_title(None)
-
-        # while current_song.get_next_song() != None:
-        #   current_song.set_title(current_song.get_next_song().get_title())
-        #   current_song = current_song.get_next_song()
-
-
-        # if current_song.get_next_song() != None: 
-        #   current_song.set_title(current_song.get_next_song().get_title())
-        #   current_song.set_next_song(current_song.get_next_song)
-        # else:
-        #   current_song = None
 
         break
       else:
@@ -102,9 +89,12 @@ class Playlist:
     current_song = self.__first_song
     song_num = 1
 
-    while current_song.get_title != None:
-      print(f'{song_num}. {current_song.get_title().capitalize()}')
-      song_num += 1
-      current_song = current_song.get_next_song()
+    while current_song != None:
+      if current_song == None or current_song.get_title() == None:
+        break
+      else: 
+        print(f'{song_num}. {current_song.get_title().capitalize()}')
+        song_num += 1
+        current_song = current_song.get_next_song()
 
   
